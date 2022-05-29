@@ -54,164 +54,182 @@ def insert(values_splitted, sorted_dict):
         print("ID must be a number!")
 
 
-def write_to_dictionary(key, value, column_name, dictionary_To_add):
+def write_to_dictionary(filtered_by_params_dict, column_name):
+    dictionary_To_add = {}
+    for key, value in filtered_by_params_dict.items():
+        if (
+            "NAME" in column_name
+            and "LASTNAME" in column_name
+            and "EMAIL" in column_name
+            and "GRADE" in column_name
+        ):
+            dictionary_To_add[key] = [value[0], value[1], value[2], value[3]]
 
-    if (
-        "NAME" in column_name
-        and "LASTNAME" in column_name
-        and "EMAIL" in column_name
-        and "GRADE" in column_name
-    ):
-        dictionary_To_add[key] = [value[0], value[1], value[2], value[3]]
-        return dictionary_To_add
-    elif "NAME" in column_name and "LASTNAME" in column_name and "EMAIL" in column_name:
-        dictionary_To_add[key] = [value[0], value[1], value[2]]
-        return dictionary_To_add
-    elif "NAME" in column_name and "LASTNAME" in column_name and "GRADE" in column_name:
-        dictionary_To_add[key] = [value[0], value[1], value[3]]
-        return dictionary_To_add
-    elif "NAME" in column_name and "EMAIL" in column_name and "GRADE" in column_name:
-        dictionary_To_add[key] = [value[0], value[2], value[3]]
-        return dictionary_To_add
-    elif (
-        "LASTNAME" in column_name and "EMAIL" in column_name and "GRADE" in column_name
-    ):
-        dictionary_To_add[key] = [value[1], value[2], value[3]]
-        return dictionary_To_add
-    elif "NAME" in column_name and "LASTNAME" in column_name:
-        dictionary_To_add[key] = [value[0], value[1]]
-        return dictionary_To_add
-    elif "NAME" in column_name and "EMAIL" in column_name:
-        dictionary_To_add[key] = [value[0], value[2]]
-        return dictionary_To_add
-    elif "NAME" in column_name and "GRADE" in column_name:
-        dictionary_To_add[key] = [value[0], value[3]]
-        return dictionary_To_add
-    elif "LASTNAME" in column_name and "EMAIL" in column_name:
-        dictionary_To_add[key] = [value[1], value[2]]
-        return dictionary_To_add
-    elif "LASTNAME" in column_name and "GRADE" in column_name:
-        dictionary_To_add[key] = [value[1], value[3]]
-        return dictionary_To_add
-    elif "EMAIL" in column_name and "GRADE" in column_name:
-        dictionary_To_add[key] = [value[2], value[3]]
-        return dictionary_To_add
-    elif "NAME" in column_name:
-        dictionary_To_add[key] = [value[0]]
-        return dictionary_To_add
-    elif "LASTNAME" in column_name:
-        dictionary_To_add[key] = [value[1]]
-        return dictionary_To_add
-    elif "EMAIL" in column_name:
-        dictionary_To_add[key] = [value[2]]
-        return dictionary_To_add
-    elif "GRADE" in column_name:
-        dictionary_To_add[key] = [value[3]]
-        return dictionary_To_add
+        elif (
+            "NAME" in column_name
+            and "LASTNAME" in column_name
+            and "EMAIL" in column_name
+        ):
+            dictionary_To_add[key] = [value[0], value[1], value[2]]
+
+        elif (
+            "NAME" in column_name
+            and "LASTNAME" in column_name
+            and "GRADE" in column_name
+        ):
+            dictionary_To_add[key] = [value[0], value[1], value[3]]
+
+        elif (
+            "NAME" in column_name and "EMAIL" in column_name and "GRADE" in column_name
+        ):
+            dictionary_To_add[key] = [value[0], value[2], value[3]]
+
+        elif (
+            "LASTNAME" in column_name
+            and "EMAIL" in column_name
+            and "GRADE" in column_name
+        ):
+            dictionary_To_add[key] = [value[1], value[2], value[3]]
+
+        elif "NAME" in column_name and "LASTNAME" in column_name:
+            dictionary_To_add[key] = [value[0], value[1]]
+
+        elif "NAME" in column_name and "EMAIL" in column_name:
+            dictionary_To_add[key] = [value[0], value[2]]
+
+        elif "NAME" in column_name and "GRADE" in column_name:
+            dictionary_To_add[key] = [value[0], value[3]]
+
+        elif "LASTNAME" in column_name and "EMAIL" in column_name:
+            dictionary_To_add[key] = [value[1], value[2]]
+
+        elif "LASTNAME" in column_name and "GRADE" in column_name:
+            dictionary_To_add[key] = [value[1], value[3]]
+
+        elif "EMAIL" in column_name and "GRADE" in column_name:
+            dictionary_To_add[key] = [value[2], value[3]]
+
+        elif "NAME" in column_name:
+            dictionary_To_add[key] = [value[0]]
+
+        elif "LASTNAME" in column_name:
+            dictionary_To_add[key] = [value[1]]
+
+        elif "EMAIL" in column_name:
+            dictionary_To_add[key] = [value[2]]
+
+        elif "GRADE" in column_name:
+            dictionary_To_add[key] = [value[3]]
+    return dictionary_To_add
 
 
-def name(a_dict, name_index, where_parameters, column_name):
+def name(a_dict, name_index, where_parameters):
     name_dict = {}
     if where_parameters[name_index + 1] == "=":
         for key, value in a_dict.items():
             if value[0].upper() == where_parameters[name_index + 2]:
-                name_dict = write_to_dictionary(key, value, column_name, name_dict)
+                name_dict[key] = [value[0], value[1], value[2], value[3]]
+                # name_dict = write_to_dictionary(key, value, column_name, name_dict)
         return name_dict
 
     elif where_parameters[name_index + 1] == "!=":
         for key, value in a_dict.items():
             if value[0].upper() != where_parameters[name_index + 2]:
-                name_dict = write_to_dictionary(key, value, column_name, name_dict)
+                name_dict[key] = [value[0], value[1], value[2], value[3]]
+                # name_dict = write_to_dictionary(key, value, column_name, name_dict)
         return name_dict
 
 
-def grade(grade_index, where_parameters, sorted_dict, column_name, select_dict):
-    if where_parameters[grade_index + 1] == "==":
+def grade(grade_index, where_parameters, sorted_dict):
+    a_dict = {}
+    if where_parameters[grade_index + 1] == "=":
         for key, value in sorted_dict.items():
             if value[3] == int(where_parameters[grade_index + 2]):
-                a_dict = write_to_dictionary(key, value, column_name, select_dict)
+                a_dict[key] = [value[0], value[1], value[2], value[3]]
+                # a_dict = write_to_dictionary(key, value, column_name, select_dict)
         return a_dict
 
     elif where_parameters[grade_index + 1] == ">":
         for key, value in sorted_dict.items():
             if value[3] > int(where_parameters[grade_index + 2]):
-                a_dict = write_to_dictionary(key, value, column_name, select_dict)
+                a_dict[key] = [value[0], value[1], value[2], value[3]]
+                # a_dict = write_to_dictionary(key, value, column_name, select_dict)
         return a_dict
 
     elif where_parameters[grade_index + 1] == ">=":
         for key, value in sorted_dict.items():
             if value[3] >= int(where_parameters[grade_index + 2]):
-                a_dict = write_to_dictionary(key, value, column_name, select_dict)
+                a_dict[key] = [value[0], value[1], value[2], value[3]]
+                # a_dict = write_to_dictionary(key, value, column_name, select_dict)
         return a_dict
 
     elif where_parameters[grade_index + 1] == ">!":
         for key, value in sorted_dict.items():
             if value[3] <= int(where_parameters[grade_index + 2]):
-                a_dict = write_to_dictionary(key, value, column_name, select_dict)
+                a_dict[key] = [value[0], value[1], value[2], value[3]]
+                # a_dict = write_to_dictionary(key, value, column_name, select_dict)
         return a_dict
 
     elif where_parameters[grade_index + 1] == "<":
         for key, value in sorted_dict.items():
             if value[3] < int(where_parameters[grade_index + 2]):
-                a_dict = write_to_dictionary(key, value, column_name, select_dict)
+                a_dict[key] = [value[0], value[1], value[2], value[3]]
+                # a_dict = write_to_dictionary(key, value, column_name, select_dict)
         return a_dict
 
     elif where_parameters[grade_index + 1] == "<=":
         for key, value in sorted_dict.items():
             if value[3] <= int(where_parameters[grade_index + 2]):
-                a_dict = write_to_dictionary(key, value, column_name, select_dict)
+                a_dict[key] = [value[0], value[1], value[2], value[3]]
+                # a_dict = write_to_dictionary(key, value, column_name, select_dict)
         return a_dict
 
     elif where_parameters[grade_index + 1] == "!<":
         for key, value in sorted_dict.items():
             if value[3] >= int(where_parameters[grade_index + 2]):
-                a_dict = write_to_dictionary(key, value, column_name, select_dict)
+                a_dict[key] = [value[0], value[1], value[2], value[3]]
+                # a_dict = write_to_dictionary(key, value, column_name, select_dict)
         return a_dict
 
     else:
         print("Wrong input for ->", where_parameters[1])
 
 
-# def lastname():
-#     name_dict = {}
-#     if where_parameters[name_index + 1] == "=":
-#         for key, value in a_dict.items():
-#             if value[1].upper() == where_parameters[name_index + 2]:
-#                 name_dict = write_to_dictionary(key, value, column_name, name_dict)
-#         return name_dict
+def lastname(a_dict, lastname_index, where_parameters):
+    lastname_dict = {}
+    if where_parameters[lastname_index + 1] == "=":
+        for key, value in a_dict.items():
+            if value[1].upper() == where_parameters[lastname_index + 2]:
+                lastname_dict[key] = [value[0], value[1], value[2], value[3]]
+                # name_dict = write_to_dictionary(key, value, column_name, name_dict)
+        return lastname_dict
 
-#     elif where_parameters[name_index + 1] == "!=":
-#         for key, value in a_dict.items():
-#             if value[1].upper() != where_parameters[name_index + 2]:
-#                 name_dict = write_to_dictionary(key, value, column_name, name_dict)
-#         return name_dict
+    elif where_parameters[lastname_index + 1] == "!=":
+        for key, value in a_dict.items():
+            if value[1].upper() != where_parameters[lastname_index + 2]:
+                lastname_dict[key] = [value[0], value[1], value[2], value[3]]
+                # name_dict = write_to_dictionary(key, value, column_name, name_dict)
+        return lastname_dict
 
-# def email():
-#     name_dict = {}
-#     if where_parameters[name_index + 1] == "=":
-#         for key, value in a_dict.items():
-#             if value[2].upper() == where_parameters[name_index + 2]:
-#                 name_dict = write_to_dictionary(key, value, column_name, name_dict)
-#         return name_dict
 
-#     elif where_parameters[name_index + 1] == "!=":
-#         for key, value in a_dict.items():
-#             if value[2].upper() != where_parameters[name_index + 2]:
-#                 name_dict = write_to_dictionary(key, value, column_name, name_dict)
-#         return name_dict
+def email(a_dict, email_index, where_parameters):
+    email_dict = {}
+    if where_parameters[email_index + 1] == "=":
+        for key, value in a_dict.items():
+            if value[2].upper() == where_parameters[email_index + 2]:
+                email_dict[key] = [value[0], value[1], value[2], value[3]]
+                # email_dict = write_to_dictionary(key, value, column_name, email_dict)
+        return email_dict
+
+    elif where_parameters[email_index + 1] == "!=":
+        for key, value in a_dict.items():
+            if value[2].upper() != where_parameters[email_index + 2]:
+                email_dict[key] = [value[0], value[1], value[2], value[3]]
+                # email_dict = write_to_dictionary(key, value, column_name, email_dict)
+        return email_dict
 
 
 def select(column_name, where_parameters, sorted_dict):
-    # input satırında AND veya OR var mı diye bakmak lazım
-    # varsa ona göre bir şeyler de yapcaz
-    # id zaten var name , surname, email,grade olabilir
-    #
-    # column_name -> id zaten var name , surname, email,grade
-    # where_parameters ->
-    # grade varsa grade'i , operandı ve sayıyı alacaz
-    # operanda göre sorted_dict ve grade'göre sorted_dict'te arama yapacaz
-    # sonra column_name'i ve arama sonuçlarını yeni bir dict'e at {}
-
     # grade in 2 sonrası
     select_dict = {}
 
@@ -221,21 +239,70 @@ def select(column_name, where_parameters, sorted_dict):
         if "GRADE" in where_parameters and "NAME" in where_parameters:
             # nota göre filtrelenmiş dictionary
             grade_index = where_parameters.index("GRADE")
-            a_dict = grade(
-                grade_index, where_parameters, sorted_dict, column_name, select_dict
-            )
+            a_dict = grade(grade_index, where_parameters, sorted_dict)
             name_index = where_parameters.index("NAME")
 
-            filtered_by_name = name(a_dict, name_index, where_parameters, column_name)
-            print(filtered_by_name)
+            filtered_by_name = name(a_dict, name_index, where_parameters)
+            final_dict = write_to_dictionary(filtered_by_name, column_name)
+            print(final_dict)
             # bu dicti isime göre filtreleyecez.
-        # elif "GRADE" in where_parameters or "NAME" in where_parameters:
+
+        elif "GRADE" in where_parameters and "EMAIL" in where_parameters:
+            # nota göre filtrelenmiş dictionary
+            grade_index = where_parameters.index("GRADE")
+            a_dict = grade(grade_index, where_parameters, sorted_dict)
+            email_index = where_parameters.index("EMAIL")
+
+            filtered_by_email = email(a_dict, email_index, where_parameters)
+            final_dict = write_to_dictionary(filtered_by_email, column_name)
+            print(final_dict)
+
+        elif "GRADE" in where_parameters and "LASTNAME" in where_parameters:
+            # nota göre filtrelenmiş dictionary
+            grade_index = where_parameters.index("GRADE")
+            a_dict = grade(grade_index, where_parameters, sorted_dict)
+            lastname_index = where_parameters.index("LASTNAME")
+
+            filtered_by_lastname = lastname(a_dict, lastname_index, where_parameters)
+            final_dict = write_to_dictionary(filtered_by_lastname, column_name)
+            print(final_dict)
+
+        elif "EMAIL" in where_parameters and "LASTNAME" in where_parameters:
+            # nota göre filtrelenmiş dictionary
+            email_index = where_parameters.index("EMAIL")
+            a_dict = email(sorted_dict, email_index, where_parameters)
+            lastname_index = where_parameters.index("LASTNAME")
+
+            filtered_by_lastname = lastname(a_dict, lastname_index, where_parameters)
+            final_dict = write_to_dictionary(filtered_by_lastname, column_name)
+            print(final_dict)
+
+        elif "EMAIL" in where_parameters and "NAME" in where_parameters:
+            # nota göre filtrelenmiş dictionary
+            email_index = where_parameters.index("EMAIL")
+            a_dict = email(sorted_dict, email_index, where_parameters)
+            name_index = where_parameters.index("NAME")
+
+            filtered_by_name = name(a_dict, name_index, where_parameters)
+            final_dict = write_to_dictionary(filtered_by_name, column_name)
+            print(final_dict)
+
+        elif "LASTNAME" in where_parameters and "NAME" in where_parameters:
+            # nota göre filtrelenmiş dictionary
+            lastname_index = where_parameters.index("LASTNAME")
+            a_dict = lastname(sorted_dict, lastname_index, where_parameters)
+            name_index = where_parameters.index("NAME")
+
+            filtered_by_name = name(a_dict, name_index, where_parameters)
+            final_dict = write_to_dictionary(filtered_by_name, column_name)
+            print(final_dict)
 
     # elif "OR" in where_parameters:
 
-    if "GRADE" in where_parameters:
-        grade_index = where_parameters.index("GRADE")
-        grade(grade_index, where_parameters, sorted_dict, column_name, select_dict)
+    # elif "OR" in where_parameters:
+    # if "GRADE" in where_parameters:
+    #     grade_index = where_parameters.index("GRADE")
+    #     grade(grade_index, where_parameters, sorted_dict)
 
 
 def main():
