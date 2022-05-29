@@ -11,17 +11,9 @@
 # Stringi id'yi cast ederken try catch
 
 # print(sorted_dict)
+import json
 
 my_dict = {}
-# operands = {
-#     "lt": "<",
-#     "lte": "<=",
-#     "nlt": "!<",
-#     "gt": ">",
-#     "gte": ">=",
-#     "ngt": ">!",
-#     "eq": "==",
-# }
 
 
 def read_csv():
@@ -50,6 +42,7 @@ def insert(values_splitted, sorted_dict):
                 int(values_splitted[4]),
             ]
             print("Eklendi")
+        return sorted_dict
 
     except ValueError:  # id'ye string girerse hata veriyor.
         print("ID must be a number!")
@@ -246,7 +239,7 @@ def select(column_name, where_parameters, sorted_dict):
 
             filtered_by_name = name(a_dict, name_index, where_parameters)
             final_dict = write_to_dictionary(filtered_by_name, column_name)
-            print(final_dict)
+            # print(final_dict)
             # bu dicti isime göre filtreleyecez.
 
         elif "GRADE" in where_parameters and "EMAIL" in where_parameters:
@@ -257,7 +250,7 @@ def select(column_name, where_parameters, sorted_dict):
 
             filtered_by_email = email(a_dict, email_index, where_parameters)
             final_dict = write_to_dictionary(filtered_by_email, column_name)
-            print(final_dict)
+            # print(final_dict)
 
         elif "GRADE" in where_parameters and "LASTNAME" in where_parameters:
             # nota göre filtrelenmiş dictionary
@@ -267,7 +260,7 @@ def select(column_name, where_parameters, sorted_dict):
 
             filtered_by_lastname = lastname(a_dict, lastname_index, where_parameters)
             final_dict = write_to_dictionary(filtered_by_lastname, column_name)
-            print(final_dict)
+            # print(final_dict)
 
         elif "EMAIL" in where_parameters and "LASTNAME" in where_parameters:
             # nota göre filtrelenmiş dictionary
@@ -277,7 +270,7 @@ def select(column_name, where_parameters, sorted_dict):
 
             filtered_by_lastname = lastname(a_dict, lastname_index, where_parameters)
             final_dict = write_to_dictionary(filtered_by_lastname, column_name)
-            print(final_dict)
+            # print(final_dict)
 
         elif "EMAIL" in where_parameters and "NAME" in where_parameters:
             # nota göre filtrelenmiş dictionary
@@ -287,7 +280,7 @@ def select(column_name, where_parameters, sorted_dict):
 
             filtered_by_name = name(a_dict, name_index, where_parameters)
             final_dict = write_to_dictionary(filtered_by_name, column_name)
-            print(final_dict)
+            # print(final_dict)
 
         elif "LASTNAME" in where_parameters and "NAME" in where_parameters:
             # nota göre filtrelenmiş dictionary
@@ -297,7 +290,7 @@ def select(column_name, where_parameters, sorted_dict):
 
             filtered_by_name = name(a_dict, name_index, where_parameters)
             final_dict = write_to_dictionary(filtered_by_name, column_name)
-            print(final_dict)
+            # print(final_dict)
 
     # elif "OR" in where_parameters:
     elif "OR" in where_parameters:
@@ -310,7 +303,7 @@ def select(column_name, where_parameters, sorted_dict):
             filtered_by_name = name(a_dict, name_index, where_parameters)
             combined_dict = {**filtered_by_name, **a_dict}
             final_dict = write_to_dictionary(combined_dict, column_name)
-            print(final_dict)
+            # print(final_dict)
             # bu dicti isime göre filtreleyecez.
 
         elif "GRADE" in where_parameters or "EMAIL" in where_parameters:
@@ -322,7 +315,7 @@ def select(column_name, where_parameters, sorted_dict):
             filtered_by_email = email(a_dict, email_index, where_parameters)
             combined_dict = {**filtered_by_email, **a_dict}
             final_dict = write_to_dictionary(combined_dict, column_name)
-            print(final_dict)
+            # print(final_dict)
 
         elif "GRADE" in where_parameters or "LASTNAME" in where_parameters:
             # nota göre filtrelenmiş dictionary
@@ -333,7 +326,7 @@ def select(column_name, where_parameters, sorted_dict):
             filtered_by_lastname = lastname(a_dict, lastname_index, where_parameters)
             combined_dict = {**filtered_by_lastname, **a_dict}
             final_dict = write_to_dictionary(combined_dict, column_name)
-            print(final_dict)
+            # print(final_dict)
 
         elif "EMAIL" in where_parameters or "LASTNAME" in where_parameters:
             # nota göre filtrelenmiş dictionary
@@ -344,7 +337,7 @@ def select(column_name, where_parameters, sorted_dict):
             filtered_by_lastname = lastname(a_dict, lastname_index, where_parameters)
             combined_dict = {**filtered_by_lastname, **a_dict}
             final_dict = write_to_dictionary(combined_dict, column_name)
-            print(final_dict)
+            # print(final_dict)
 
         elif "EMAIL" in where_parameters or "NAME" in where_parameters:
             # nota göre filtrelenmiş dictionary
@@ -356,7 +349,7 @@ def select(column_name, where_parameters, sorted_dict):
             combined_dict = {**filtered_by_name, **a_dict}
 
             final_dict = write_to_dictionary(combined_dict, column_name)
-            print(final_dict)
+            # print(final_dict)
 
         elif "LASTNAME" in where_parameters or "NAME" in where_parameters:
             # nota göre filtrelenmiş dictionary
@@ -368,55 +361,75 @@ def select(column_name, where_parameters, sorted_dict):
             combined_dict = {**filtered_by_name, **a_dict}
 
             final_dict = write_to_dictionary(combined_dict, column_name)
-            print(final_dict)
+            # print(final_dict)
 
     else:
         if "GRADE" in where_parameters:
             grade_index = where_parameters.index("GRADE")
             a_dict = grade(grade_index, where_parameters, sorted_dict)
             final_dict = write_to_dictionary(a_dict, column_name)
-            print(final_dict)
+            # print(final_dict)
         elif "NAME" in where_parameters:
             name_index = where_parameters.index("NAME")
             a_dict = name(sorted_dict, name_index, where_parameters)
             final_dict = write_to_dictionary(a_dict, column_name)
-            print(final_dict)
+            # print(final_dict)
 
         elif "EMAIL" in where_parameters:
             email_index = where_parameters.index("EMAIL")
             a_dict = email(sorted_dict, email_index, where_parameters)
             final_dict = write_to_dictionary(a_dict, column_name)
-            print(final_dict)
+            # print(final_dict)
 
         elif "LASTNAME" in where_parameters:
             lastname_index = where_parameters.index("LASTNAME")
             a_dict = lastname(sorted_dict, lastname_index, where_parameters)
             final_dict = write_to_dictionary(a_dict, column_name)
-            print(final_dict)
+            # print(final_dict)
 
     return final_dict
 
 
-def delete(where_parameters, sorted_dict):
+def delete(where_parameters, sorted_dict, select_dict):
     # select edilen dictionaryi delete' e parametre gönder
     # eğer o dict boş ise önce select çalışmamış demek o zaman sadece students'tan sil
     # dict dolu ise hem o select'ten hem de students'ten sil
+
+    # if len(select_dict) == 0:
     dict_to_delete = select(
         ["NAME", "LASTNAME", "EMAIL", "GRADE"], where_parameters, sorted_dict
     )
-
     for key, value in dict_to_delete.items():
         del sorted_dict[key]
     print(sorted_dict)
     return sorted_dict
 
 
+def write_to_json(data):
+
+    with open('data.json', 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+
+
+# else:
+#     dict_to_delete = select(
+#         ["NAME", "LASTNAME", "EMAIL", "GRADE"], where_parameters, select_dict
+#     )
+#     for key, value in dict_to_delete.items():
+#         del sorted_dict[key]
+#         del select_dict[key]
+#     print(select_dict)
+#     return select_dict
+
+
 def main():
+    selected_dict = {}
     sorted_dict = read_csv()
     string = ""
     while True:
         string = input("Enter input: ")
         if string == "exit":
+            write_to_json(sorted_dict)
             break
 
         string = string.split(" ")
@@ -427,7 +440,7 @@ def main():
             values = string[3]
             values_subStr = values[7:-1]
             values_splitted = values_subStr.split(",")
-            insert(values_splitted, sorted_dict)
+            sorted_dict = insert(values_splitted, sorted_dict)
 
         if string[0] == "SELECT":
             # COLUMN_NAME'ler ile bir şey yapmıyor şu anda
@@ -443,7 +456,7 @@ def main():
                 if len(string[5:-3]) == 0:
                     where_parameters = string[5:]
                     print(where_parameters)
-                    select(column_name, where_parameters, sorted_dict)
+                    sorted_dict = select(column_name, where_parameters, sorted_dict)
                 else:
                     # where'den sonra parametre vermişse ve ORDER BY <> demişse
                     # SELECT name FROM STUDENTS WHERE grade > 40 AND name='John' ORDER BY ASC
@@ -457,12 +470,16 @@ def main():
                             sorted_dict = dict(sorted(my_dict.items(), reverse=True))
                             where_parameters = string[5:-3]
                             print(where_parameters)
-                            select(column_name, where_parameters, sorted_dict)
+                            sorted_dict = select(
+                                column_name, where_parameters, sorted_dict
+                            )
                         elif string[-1] == "ASC":  # zaten artan şekilde
                             sorted_dict = dict(sorted(my_dict.items()))
                             where_parameters = string[5:-3]
                             print(where_parameters)
-                            select(column_name, where_parameters, sorted_dict)
+                            sorted_dict = select(
+                                column_name, where_parameters, sorted_dict
+                            )
                         else:
                             print("Input Error -> ", string[2])
 
@@ -471,12 +488,12 @@ def main():
                     else:
                         where_parameters = string[5:]
                         print(where_parameters)
-                        select(column_name, where_parameters, sorted_dict)
+                        sorted_dict = select(column_name, where_parameters, sorted_dict)
 
         if string[0] == "DELETE":
             # DELETE FROM STUDENT WHERE name = ‘John’ and grade <= 20
             where_parameters = string[4:]
-            delete(where_parameters, sorted_dict)
+            sorted_dict = delete(where_parameters, sorted_dict, selected_dict)
 
 
 main()
